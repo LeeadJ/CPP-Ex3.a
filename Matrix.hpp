@@ -1,32 +1,42 @@
 #pragma once
 #include<iostream>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <stdexcept>
 
 namespace zich{
     class Matrix{
 
-    //Variables of class or private in default.
+    //Variables of class are private in default.
     std::vector<double> mat;
-    unsigned int row, column;
+    int row, column;
 
     public:
     //Constructor:
-    Matrix(const std::vector<double> m, const unsigned int r=1, const unsigned int c=1){
+    Matrix(const std::vector<double> m, const int r, const int c){
         this->mat = m;
         this->row = r;
         this->column = c;
     }
-    //Arithmetic Operators 
-    Matrix operator + (Matrix const &other); //adding to matrixs together (returns new Matrix)
-    Matrix operator - (Matrix const &other); //subtracting to matrixs together (returns new Matrix)
-    Matrix operator * (Matrix const &other) //multiplying two matrixs (return new Matrix)
-    Matrix operator * (const double x); //multiplying the base matrix be double (return new Matrix)
+    //Getters:
+    //Adding 'const' to make sure the getter doesn't allow the variables to be changed.
+    int getRow() const{
+        return row;
+    }
+    int getColumn() const{
+        return column;
+    }
+    //Arithmetic Operators: 
+    Matrix operator + (const Matrix& other); //adding to matrixs together (returns new Matrix)
+    Matrix operator - (const Matrix& other); //subtracting to matrixs together (returns new Matrix)
+    Matrix operator * (const Matrix& other); //multiplying two matrixs (return new Matrix)
+    Matrix operator * (const double num); //multiplying the base matrix be double (return new Matrix)
 
     //Assignment Operators:
-    void operator += (Matrix cont &other); //adding a matrix to a base matrix
-    void operator -= (Matrix cont &other); //subtracting a matrix to a base matrix
-    void operator *= (double x); // multiplying by a double
-    void operator *= (Matrix cont &other); //multiplying by another matrix
+    void operator += (const Matrix& other); //adding a matrix to a base matrix
+    void operator -= (const Matrix& other); //subtracting a matrix to a base matrix
+    void operator *= (double num); // multiplying by a double
 
     //Unary Operators:
     Matrix operator ++ (); //increment the matrix (++prefix)
@@ -37,15 +47,17 @@ namespace zich{
     Matrix operator - (); //changes the vlaues of the matrix to negative
 
     //Relational Operators (boolean):
-    bool operator > (Matrix const &other);
-    bool operator < (Matrix const &other);
-    bool operator >= (Matrix const &other);
-    bool operator <= (Matrix const &other);
-    bool operator == (Matrix const &other);
-    bool operator != (Matrix const &other);
+    bool operator > (const Matrix& other);
+    bool operator < (const Matrix& other);
+    bool operator >= (const Matrix& other);
+    bool operator <= (const Matrix& other);
+    bool operator == (const Matrix& other);
+    bool operator != (const Matrix& other);
 
     //io Operators:
-    friend std::ostream& operator << (std::ostream& os, const Matrix& mat); //for overriding cout
-    friend std::istream& operator >> (std::istream& is, const Matrix& mat); //for overriding cin
+    friend std::ostream& operator << (std::ostream& outStream, const Matrix&  mat); //for overriding cout
+    friend std::istream& operator >> (std::istream& inStream, const Matrix& mat); //for overriding cin
 };
 }
+
+
