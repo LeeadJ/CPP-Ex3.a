@@ -14,11 +14,10 @@ namespace zich{
 
     public:
     //Constructor:
-    Matrix(const std::vector<double> m, const int r, const int c){
-        this->mat = m;
-        this->row = r;
-        this->column = c;
-    }
+    Matrix(const std::vector<double> m, const int r, const int c);
+    //Destructor
+    ~Matrix();
+
     //Getters:
     //Adding 'const' to make sure the getter doesn't allow the variables to be changed.
     int getRow() const{
@@ -27,6 +26,15 @@ namespace zich{
     int getColumn() const{
         return column;
     }
+    //Setters:
+    void setRow(unsigned int r){
+        row = r;
+    }
+    void setColumn(unsigned int c){
+        column = c;
+    }
+
+    
     //Arithmetic Operators: 
     Matrix operator + (const Matrix& other); //adding to matrixs together (returns new Matrix)
     Matrix operator - (const Matrix& other); //subtracting to matrixs together (returns new Matrix)
