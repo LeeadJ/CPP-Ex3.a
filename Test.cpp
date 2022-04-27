@@ -6,16 +6,16 @@ TEST_CASE("Bad Input"){ // 6 tests
     CHECK_THROWS(zich::Matrix(vec, 0, 0)); //both==0
     CHECK_THROWS(zich::Matrix(vec, 0, 1)); //row==0
     CHECK_THROWS(zich::Matrix(vec, 1, 0)); //column==0
-    CHECK_THROWS(zich::Matrix(vec, 5, -1)); //column==negative
-    CHECK_THROWS(zich::Matrix(vec, -8, 1)); //row==negative
-    CHECK_THROWS(zich::Matrix(vec,-60, -1)); //both==negative
+    CHECK_THROWS(zich::Matrix(vec, 1, -1)); //column==negative
+    CHECK_THROWS(zich::Matrix(vec, -1, 1)); //row==negative
+    CHECK_THROWS(zich::Matrix(vec,-1, -1)); //both==negative
 }
 
 TEST_CASE("Bad Arithmetic Operators:"){ // 6 tests
-    const std::vector<double> v = {1,1,1,1,1,1}; //6 indexes
-    zich::Matrix test1{v, 2,3}; //row=2,col=3
-    zich::Matrix test2{v, 3,2}; //row=3,col=2
-    zich::Matrix test3{v, 3,2}; //row=3,col=2
+    const std::vector<double> vec = {1,1,1,1,1,1}; //6 indexes
+    zich::Matrix test1{vec, 2,3}; //row=2,col=3
+    zich::Matrix test2{vec, 3,2}; //row=3,col=2
+    zich::Matrix test3{vec, 3,2}; //row=3,col=2
 
     CHECK_THROWS(test1 + test2); //dimensions don't equal (+)
     CHECK_THROWS(test1 - test2); //dimensions don't equal (-)

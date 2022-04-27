@@ -1,80 +1,78 @@
 #pragma once
 #include<iostream>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <stdexcept>
-#include <algorithm> //for copy() (setter)
-#include <iterator> //for back_inserter (setter)
+#include<vector>
 
 namespace zich{
-    class Matrix{
-    
-        //Variables of class are private in default.
-        std::vector<double> mat;
-         int row, column;
+    class Matrix
+    {
+    private:
+        int _row;
+        int _col;
+        int _size;
+        std::vector<double> _mat;
+        
+    public:
+        //Getters
+        int getRow() const {return this->_row;}
+        int getColumn() const {return this->_col;}
+        int getSize() const {return this->_size;}
+        std::vector<double> getVector() const {return this->_mat;}
 
-        public:
-        //Constructor:
-        Matrix(const std::vector<double> m,  const int r,  const int c);
-        // //Destructor
-        ~Matrix();
-
-        //Getters:
-        //Adding 'const' to make sure the getter doesn't allow the variables to be changed.
-         int getRow() const{
-            return row;
-        }
-         int getColumn() const{
-            return column;
-        }
-        std::vector<double> getVector() const{
-            return mat;
-        }
-        //Setters:
-        void setRow( int r){
-            this->row = r;
-        }
-        void setColumn( int c){
-            this->column = c;
-        }
-        void setVector(std::vector<double> other){
-            copy(other.begin(), other.end(), back_inserter(this->mat));
-        }
-
-
-        //Arithmetic Operators: 
-        Matrix operator + (const Matrix& other); //adding to matrixs together (returns new Matrix)
-        Matrix operator - (const Matrix& other); //subtracting to matrixs together (returns new Matrix)
-        Matrix &operator * (double scalar); //multiplying the base matrix be double (return new Matrix)
-        friend Matrix operator * (double scalar, const Matrix& other); //multiplying two matrixs (return new Matrix)
+        // Setters
+        void setRow(int r){this->_row = r;}
+        void setColumn(int c){this->_col = c;}
+        void setSize(int s){this->_size = s;}
+        void setVector(const std::vector<double> other){this->_mat = other;}
         
 
-        //Assignment Operators:
-        void operator += (const Matrix& other); //adding a matrix to a base matrix
-        void operator -= (const Matrix& other); //subtracting a matrix to a base matrix
-        void operator *= (double num); // multiplying by a double
+        //Constructors
+        Matrix();
+        Matrix(const std::vector<double> &m, int r, int c);
+        Matrix(const Matrix& other);
+
+        //Destructor
+        ~Matrix();
+
+        //Functions
+        /*This function prints the matrix.*/
+        void printMatrix() const;
+        /*This function returns the sum of the matrix.*/
+        double sum() const; 
+        
+
+        //Operators
+        //Binary Operators
+        Matrix operator + (const Matrix& other) const;  
+        Matrix operator - (const Matrix& other) const;
+        Matrix operator * (const Matrix& other) const;
+        Matrix operator * (const double scalar) const;
+        
+        
+        Matrix& operator += (const Matrix& other);
+        Matrix& operator -= (const Matrix& other);
+        Matrix& operator *= (const Matrix& other);
+        Matrix& operator *= (const double num);
+
+        bool operator == (const Matrix& other) const;
+        bool operator != (const Matrix& other) const;
+        bool operator >= (const Matrix& other) const;
+        bool operator <= (const Matrix& other) const;
+        bool operator > (const Matrix& other) const;
+        bool operator < (const Matrix& other) const;
 
         //Unary Operators:
-        Matrix operator ++ (); //increment the matrix (++prefix)
-        Matrix operator -- (); //decrement the matrix (--prefix)
-        Matrix operator ++ (int); //increment the matrix by (postfix++)
-        Matrix operator -- (int); //increment the matrix by (postfix--)
-        Matrix operator + (); //changes the vlaues of the matrix to positive
-        Matrix operator - (); //changes the vlaues of the matrix to negative
+        Matrix& operator ++ ();
+        Matrix& operator -- ();
+        Matrix operator ++ (int); //postfix
+        Matrix operator -- (int); //postfix
 
-        //Relational Operators (boolean):
-        bool operator > (const Matrix& other);
-        bool operator < (const Matrix& other);
-        bool operator >= (const Matrix& other);
-        bool operator <= (const Matrix& other);
-        bool operator == (const Matrix& other);
-        bool operator != (const Matrix& other);
+        Matrix& operator - ();
+        Matrix& operator + ();
 
-        //io Operators:
-        friend std::ostream& operator << (std::ostream& outStream, const Matrix&  mat); //for overriding cout
-        friend std::istream& operator >> (std::istream& inStream, const Matrix& mat); //for overriding cin
+        //Friend Operators:
+        friend Matrix operator * (const double num, const Matrix& other);
+        friend std::ostream& operator << (std::ostream& out, const Matrix& other);
+        friend std::istream& operator >> (std::istream& in,  Matrix& other);
+        
     };
 }
-
-
